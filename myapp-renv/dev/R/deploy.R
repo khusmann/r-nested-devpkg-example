@@ -49,35 +49,42 @@ local_repo <- function(
 #'
 #' @export
 deploy <- function(config = "default") {
+  cli::cli_rule(left = "Deploy myapp")
+
   # Make sure all changes are committed
   confirm_dirty_continue()
 
-  # Clone the repo to a temp dir and set the wd there
+  cli::cli_progress_step("Cloning repo to temporary directory")
   local_repo()
+  withr::local_dir("myapp-renv") # Change wd to project folder
 
-  # Create a new renv.lock without development deps
+  cli::cli_progress_step("Creating new renv.lock without dev dependencies")
   renv::snapshot(
     ".",
-    packages = renv::dependencies("DESCRIPTION")$Package
+    packages = renv::dependencies("DESCRIPTION")$Package,
+    prompt = FALSE
   )
 
-  # Set envvars for the deployment
+  cli::cli_progress_step("Setting envvars for configuration `{config}`")
   env_vars <- c(
     MYAPP_CONFIG = config
   )
 
   withr::local_envvar(env_vars)
 
-  rsconnect::deployApp(
-    appFiles = c(
-      "app.R",
-      "inst",
-      "DESCRIPTION",
-      "NAMESPACE",
-      "R",
-      "renv.lock"
-    ),
-    appName = glue::glue("myapp [{config}]"),
-    envVars = names(env_vars) # These will be set on the connect server
-  )
+  cli::cli_progress_step("Deploying app")
+  #  rsconnect::deployApp(
+  #    appFiles = c(
+  #      "app.R",
+  #      "inst",
+  #      "DESCRIPTION",
+  #      "NAMESPACE",
+  #      "R",
+  #      "renv.lock"
+  #    ),
+  #    appName = glue::glue("myapp [{config}]"),
+  #    envVars = names(env_vars) # These will be set on the connect server
+  #  )
+
+  cli::cli_process_done()
 }
