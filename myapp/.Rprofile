@@ -1,17 +1,18 @@
 if (interactive()) {
-  if (!requireNamespace("pkgload", quietly = TRUE)) {
-    stop(
+  if (requireNamespace("pkgload", quietly = TRUE)) {
+    pkgload::load_all(
+      "dev",
+      attach = FALSE,
+      export_all = FALSE,
+      attach_testthat = FALSE
+    )
+  } else {
+    warning(
       paste0(
-        'pkgload is not installed. Please run `install.packages("pkgload")` ',
-        'and then restart your session.'
-      )
+        'Unable to load mypackage.dev, pkgload is not installed.\n',
+        'Please run `install.packages("pkgload") and then restart your session.'
+      ),
+      call. = FALSE
     )
   }
-
-  pkgload::load_all(
-    "dev",
-    attach = FALSE,
-    export_all = FALSE,
-    attach_testthat = FALSE
-  )
 }
