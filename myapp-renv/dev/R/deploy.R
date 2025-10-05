@@ -61,7 +61,10 @@ deploy <- function(config = "default") {
   cli::cli_progress_step("Creating new renv.lock without dev dependencies")
   renv::snapshot(
     ".",
-    packages = renv::dependencies("DESCRIPTION")$Package,
+    packages = c(
+      renv::dependencies("DESCRIPTION")$Package,
+      "pkgload" # pkgload is used in app.R, not in the package
+    ),
     prompt = FALSE
   )
 
