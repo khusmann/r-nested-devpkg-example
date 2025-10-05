@@ -19,8 +19,6 @@ The repo includes two example projects:
 
 2.  **renv-based setup** -- `myapp-renv/myapp.Rproj`
 
----
-
 ### Minimal Setup
 
 1.  Clone the repo and open `myapp/myapp.Rproj` in RStudio or Positron.
@@ -67,14 +65,5 @@ The `myapp-renv` project shows how to integrate **renv** with a dev package:
 - Update the `NAMESPACE` of your dev package with `devtools::document("dev")`
   when changing exports.
 
-- For a full discussion and detailed rationale, see the linked blog post above.
-
----
-
-### Example Dev Functions
-
-| Function              | Description                                |
-| --------------------- | ------------------------------------------ |
-| `myapp.dev::run()`    | Launches the Shiny app in development mode |
-| ---                   | ---                                        |
-| `myapp.dev::deploy()` | Example deployment function                |
+- For a full discussion and detailed rationale, see the
+  [blog post](http://www.kylehusmann.com/posts/2025/r-nested-development-packages).
