@@ -14,7 +14,8 @@ options(
       lapply(\(i) file.path(project, i)) |>
       lapply(get_deps) |>
       unlist() |>
-      unique()
+      unique() |>
+      Filter(Negate(is.na), x = _)
   }
 )
 
