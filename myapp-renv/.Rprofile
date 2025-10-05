@@ -1,21 +1,14 @@
 # Have renv explicitly use all the deps in DESCRIPTION and dev/DESCRIPTION
-# Note: you must set `renv$settings$snapshot.type("custom")` for this
-# to take effect
+# Note: for this hook to be used, you must use
+# `renv$settings$snapshot.type("custom")` when setting up your renv
+# for the project
 options(
   renv.snapshot.filter = function(project) {
-    get_deps <- function(desc_path) {
-      read.dcf(desc_path, fields = c("Imports", "Suggests")) |>
-        lapply(\(i) strsplit(i, ",")) |>
-        unlist() |>
-        trimws() |>
-        (\(x) gsub("\\s*\\(.*\\)", "", x))() # Remove version indicators
-    }
-    c("DESCRIPTION", "dev/DESCRIPTION") |>
-      lapply(\(i) file.path(project, i)) |>
-      lapply(get_deps) |>
-      unlist() |>
-      unique() |>
-      Filter(Negate(is.na), x = _)
+    renv::dependencies(
+      file.path(project, c("DESCRIPTION", "dev/DESCRIPTION")),
+      dev = TRUE,
+      quiet = TRUE
+    )$Package
   }
 )
 
