@@ -1,6 +1,14 @@
 local({
-  pkgfn <- getOption("renv.snapshot.filter")
-  if (is.function(pkgfn) && all(pkgfn(".") %in% installed.packages())) {
+  make_quiet <- function(code) {
+    sink(nullfile())
+    on.exit(sink(), add = TRUE)
+    force(code)
+  }
+
+  # Use make_quiet to prevent renv from printing
+  renv_status <- make_quiet(renv::status())
+
+  if (renv_status$synchronized) {
     pkgload::load_all(
       "dev",
       attach = FALSE,
@@ -11,7 +19,7 @@ local({
     warning(
       paste0(
         "Your development environment is not set up.\n",
-        "Please run `renv::restore()` and then restart your session."
+        "Please resolve `renv::status()` and then restart your session."
       ),
       call. = FALSE
     )
