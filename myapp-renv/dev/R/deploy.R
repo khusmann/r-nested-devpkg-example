@@ -63,7 +63,7 @@ deploy <- function(config = "default") {
     ".",
     packages = c(
       renv::dependencies("DESCRIPTION")$Package,
-      "pkgload" # pkgload is used in app.R, not in the package
+      "pkgload" # pkgload is only used by app.R, not in the myapp package
     ),
     prompt = FALSE
   )
