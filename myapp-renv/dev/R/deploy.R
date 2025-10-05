@@ -86,5 +86,11 @@ deploy <- function(config = "default") {
   #    envVars = names(env_vars) # These will be set on the connect server
   #  )
 
+
+  # Other things you can do here:
+  # - Build and deploy the pkgdown docs?
+  # - Build other configurations and deploy to other systems?
+  # - etc. etc.
+
   cli::cli_process_done()
 }
