@@ -13,4 +13,5 @@ Imports:
     gert,
     pkgload,
     rlang,
+    rsconnect,
     withr
