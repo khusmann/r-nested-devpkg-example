@@ -1,0 +1,10 @@
+Package: myapp
+Title: A simple Shiny app to demonstrate nested dev packages.
+Version: 0.0.0.9000
+Authors@R: 
+    person("Kyle", "Husmann", , "kyle@kylehusmann.com", role = c("aut", "cre"))
+Description: A simple Shiny app to demonstrate nested dev packages.
+License: Apache License (>= 2)
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
